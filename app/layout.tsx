@@ -11,7 +11,23 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: 'Mirea Shin | Frontend Developer',
-  description: '신미례의 포트폴리오입니다.',
+  description:
+    '기획자, 디자이너, 백엔드 개발자와 긴밀하게 협업하며 약 4년간 실무 경험을 쌓아온 프론트엔드 개발자 신미례의 포트폴리오입니다.',
+  openGraph: {
+    title: 'Mirea Shin | Frontend Developer',
+    description:
+      '기획자, 디자이너, 백엔드 개발자와 긴밀하게 협업하며 약 4년간 실무 경험을 쌓아온 프론트엔드 개발자 신미례의 포트폴리오입니다.',
+    type: 'website',
+    locale: 'ko_KR',
+    // url:""
+    // image:"" // 1200×630px 이미지를 public/og-image.pn
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Mirea Shin | Frontend Developer',
+    description:
+      '기획자, 디자이너, 백엔드 개발자와 긴밀하게 협업하며 약 4년간 실무 경험을 쌓아온 프론트엔드 개발자 신미례입니다.',
+  },
 };
 
 export default function RootLayout({

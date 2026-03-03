@@ -68,5 +68,6 @@ OPENAI_API_KEY=your_api_key_here
 - 섹션 컴포넌트는 서버 컴포넌트 유지 (`'use client'` 금지), 애니메이션은 `AnimateOnScroll` 래퍼로 처리
 
 ## 잔여 과업
-- [ ] 프로젝트 카드 클릭 시 모달로 프로젝트 상세 정보 표출
+- [x] 프로젝트 카드 클릭 시 모달로 프로젝트 상세 정보 표출
+- [ ] 프로젝트 모달에 스크린샷 이미지 추가 (`public/images/projects/`에 저장 후 `details.image` 필드에 경로 입력, Next.js `<Image>` 컴포넌트 사용)
 - [ ] 프로젝트 카드에 배포 링크 추가 (배포 후 `constants/portfolio.ts`의 `links` 필드에 추가)

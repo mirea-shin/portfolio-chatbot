@@ -33,7 +33,15 @@ const MessageBubble = ({ message }: { message: Message }) => {
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const { messages, isLoading, error, isLimitReached, userMessageCount, maxMessages, sendMessage } = useChat();
+  const {
+    messages,
+    isLoading,
+    error,
+    isLimitReached,
+    userMessageCount,
+    maxMessages,
+    sendMessage,
+  } = useChat();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -72,7 +80,9 @@ const ChatWidget = () => {
           {/* Header */}
           <div className="px-4 py-3 border-b border-zinc-100 flex items-center justify-between bg-white">
             <div>
-              <p className="text-sm font-semibold text-zinc-900">AI 어시스턴트</p>
+              <p className="text-sm font-semibold text-zinc-900">
+                AI 어시스턴트
+              </p>
               <p className="text-xs text-zinc-400">신미례에 대해 물어보세요</p>
             </div>
             <button
@@ -89,7 +99,7 @@ const ChatWidget = () => {
             {showQuickReplies && (
               <div className="flex flex-col items-center gap-4 mt-4">
                 <p className="text-xs text-zinc-400 text-center">
-                  안녕하세요! 미례에 대해 궁금한 것을 물어보세요 👋
+                  안녕하세요! 저에 대해 궁금한 것을 물어보세요 👋
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {QUICK_REPLIES.map((q) => (
@@ -133,7 +143,10 @@ const ChatWidget = () => {
                 </p>
                 <p className="text-xs text-zinc-400 mt-0.5">
                   더 궁금한 점은{' '}
-                  <a href="mailto:m.shin6764@gmail.com" className="underline hover:text-zinc-600">
+                  <a
+                    href="mailto:m.shin6764@gmail.com"
+                    className="underline hover:text-zinc-600"
+                  >
                     이메일
                   </a>
                   로 문의해주세요.
@@ -142,7 +155,9 @@ const ChatWidget = () => {
             ) : (
               <>
                 {(isNearLimit || input.length >= MAX_INPUT_LENGTH * 0.9) && (
-                  <p className={`text-xs text-center pt-2 ${input.length >= MAX_INPUT_LENGTH * 0.9 ? 'text-red-400' : 'text-zinc-400'}`}>
+                  <p
+                    className={`text-xs text-center pt-2 ${input.length >= MAX_INPUT_LENGTH * 0.9 ? 'text-red-400' : 'text-zinc-400'}`}
+                  >
                     {input.length >= MAX_INPUT_LENGTH * 0.9
                       ? `최대 ${MAX_INPUT_LENGTH}자까지 입력 가능해요 (${input.length} / ${MAX_INPUT_LENGTH})`
                       : `질문 ${maxMessages - userMessageCount}개 남았어요`}
@@ -153,7 +168,9 @@ const ChatWidget = () => {
                     ref={inputRef}
                     type="text"
                     value={input}
-                    onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
+                    onChange={(e) =>
+                      setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))
+                    }
                     placeholder="메시지를 입력하세요..."
                     className="flex-1 text-sm px-3 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:border-zinc-400 transition-colors"
                     disabled={isLoading}
@@ -180,7 +197,7 @@ const ChatWidget = () => {
         )}
         <button
           onClick={() => setIsOpen((prev) => !prev)}
-          className="relative w-14 h-14 bg-zinc-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-zinc-700 transition-colors text-2xl"
+          className="relative w-14 h-14 bg-zinc-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-zinc-700 transition-colors text-2xl cursor-pointer"
           aria-label={isOpen ? '챗봇 닫기' : '챗봇 열기'}
         >
           {isOpen ? '✕' : '💬'}

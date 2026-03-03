@@ -26,27 +26,68 @@ export const PORTFOLIO_DATA: PortfolioData = {
     {
       name: 'Rootin',
       description: '습관 형성을 도와주는 루틴 트래킹 웹앱',
-      tech: ['React', 'Express', 'TypeScript', 'Prisma'],
+      tech: ['React', 'TypeScript', 'Zustand', 'React Query', 'Vite', 'Express', 'Prisma', 'PostgreSQL'],
       role: '풀스택 솔로 개발',
       links: {
         client: 'https://github.com/mirea-shin/react-monorepo',
         server: 'https://github.com/mirea-shin/rootin-server',
       },
       status: 'active',
+      details: {
+        highlights: [
+          'Feature-Sliced Design(FSD) 아키텍처 도입으로 app → pages → widgets → features → entities → shared 레이어 간 단방향 의존성 유지',
+          'Zustand로 클라이언트 상태(인증·JWT), React Query로 서버 상태(루틴·태스크 데이터) 역할을 명확히 분리',
+          'axios 요청 인터셉터에서 localStorage의 JWT를 Authorization 헤더에 자동 주입하고, 인증 만료 시 토큰 초기화 후 /auth로 리다이렉트',
+          'Express 5 + Prisma + PostgreSQL 기반 REST API 서버를 직접 설계 및 구현한 풀스택 프로젝트',
+          'Yarn 4 모노레포로 클라이언트·서버 코드베이스를 단일 저장소에서 통합 관리',
+        ],
+        techStack: [
+          { category: 'Frontend', items: ['React', 'TypeScript', 'Zustand', 'React Query', 'Vite', 'Tailwind CSS'] },
+          { category: 'Backend', items: ['Express 5', 'Prisma', 'PostgreSQL', 'Node.js'] },
+          { category: 'Infra', items: ['Yarn 4 Monorepo'] },
+        ],
+      },
     },
     {
       name: 'AI 챗봇 포트폴리오',
       description: 'OpenAI를 활용한 챗봇 형태의 인터랙티브 포트폴리오',
-      tech: ['React', 'Next.js', 'TypeScript', 'OpenAI API'],
+      tech: ['Next.js', 'React', 'TypeScript', 'OpenAI API', 'Tailwind CSS'],
       role: '풀스택 솔로 개발',
       status: 'in-progress',
+      details: {
+        highlights: [
+          'Next.js App Router 기반 서버 컴포넌트 원칙을 유지하고, 인터랙션이 필요한 부분만 클라이언트 컴포넌트로 분리',
+          'OpenAI GPT-4o API를 연동한 서버사이드 API Route에서 IP 기반 Rate Limit(시간당 20회) 적용',
+          '챗봇 상태·API 호출 로직을 useChat 커스텀 훅으로 분리하여 UI와 비즈니스 로직 단일 책임 유지',
+          '세션당 질문 10개 제한, 입력 200자 제한, 잔여 횟수 경고 등 사용자 보호 UX 구현',
+        ],
+        techStack: [
+          { category: 'Frontend', items: ['React', 'TypeScript', 'Tailwind CSS'] },
+          { category: 'Backend', items: ['Next.js (App Router)', 'OpenAI API'] },
+        ],
+      },
     },
     {
       name: '일렉트론 키오스크 & 관리자 페이지',
       description: 'Electron 기반 키오스크 프로그램 및 관리자 웹 어드민',
-      tech: ['Electron', 'React', 'TypeScript'],
+      tech: ['Electron', 'React', 'TypeScript', 'Next.js', 'Hono', 'SQLite', 'Zustand', 'React Query'],
       role: '풀스택 솔로 개발',
-      status: 'planned',
+      status: 'active',
+      details: {
+        highlights: [
+          'pnpm 모노레포로 키오스크(Electron)·어드민(Next.js)·서버(Hono)·공유 타입 패키지를 단일 저장소에서 통합 관리',
+          'Electron contextIsolation + preload 브릿지 패턴으로 렌더러-메인 프로세스 간 보안 IPC 채널 설계',
+          '1080×1920px 세로형 키오스크 전용 UI 레이아웃 구현',
+          'Hono + better-sqlite3 기반 경량 REST API 서버 구축으로 외부 DB 없이 로컬 운용 가능한 구조 설계',
+          'Next.js 15 기반 관리자 대시보드로 메뉴·카테고리·주문 현황 실시간 관리 기능 구현',
+        ],
+        techStack: [
+          { category: 'Kiosk', items: ['Electron', 'React', 'TypeScript', 'Zustand', 'React Query', 'Vite'] },
+          { category: 'Admin', items: ['Next.js 15', 'React', 'TypeScript'] },
+          { category: 'Backend', items: ['Hono', 'better-sqlite3', 'SQLite'] },
+          { category: 'Infra', items: ['pnpm Monorepo'] },
+        ],
+      },
     },
   ],
   experience: [

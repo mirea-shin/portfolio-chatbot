@@ -12,8 +12,17 @@ export interface Project {
   links?: {
     client?: string;
     server?: string;
+    demo?: string;
   };
   status: 'active' | 'in-progress' | 'planned';
+  details?: {
+    period?: string;
+    highlights: string[];
+    techStack?: {
+      category: string;
+      items: string[];
+    }[];
+  };
 }
 
 export interface Experience {
