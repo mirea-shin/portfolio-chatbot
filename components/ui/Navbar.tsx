@@ -11,11 +11,23 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20); // 20px부터 변함
-    window.addEventListener('scroll', handleScroll, { passive: true }); // 이 이벤트 핸들러 안에서 preventDefault()를 절대 호출하지 않겠다
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const heroEl = document.getElementById('hero');
+    if (!heroEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(heroEl);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -26,10 +38,12 @@ const Navbar = () => {
           : 'border-none bg-transparent'
       } `}
     >
-      <nav className="max-w-3xl mx-auto px-6 pl-0 h-14 flex items-center justify-between ">
+      <nav className="max-w-3xl mx-auto  pl-0 h-14 flex items-center justify-between ">
         <a
           href="#hero"
-          className="text-sm font-semibold text-zinc-900 hover:text-zinc-600 transition-colors "
+          className={`text-sm font-semibold text-zinc-900 hover:text-zinc-600 transition-all duration-300 ${
+            heroVisible ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          }`}
         >
           Mirea Shin
         </a>

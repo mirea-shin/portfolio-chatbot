@@ -11,22 +11,53 @@ export const PORTFOLIO_DATA: PortfolioData = {
     github: 'https://github.com/mirea-shin',
     phone: '010-4071-6764',
   },
-  skills: {
-    main: [
-      'React',
-      'TypeScript',
-      'Zustand',
-      'Tailwind CSS',
-      'Styled Components',
-    ],
-    sub: ['Node.js', 'Express', 'Redux'],
-    learning: ['Next.js'],
-  },
+  skills: [
+    {
+      category: 'Frontend & Desktop',
+      items: [
+        {
+          level: 'main',
+          names: [
+            'React',
+            'TypeScript',
+            'Electron',
+            'Zustand',
+            'Redux',
+            'Tailwind CSS',
+            'Styled-Components',
+          ],
+        },
+        { level: 'experienced', names: ['Next.js', 'React Query'] },
+      ],
+    },
+    {
+      category: 'Backend & Database',
+      items: [
+        { level: 'experienced', names: ['Node.js', 'Express', 'Prisma'] },
+      ],
+    },
+    {
+      category: 'Tools & Collaboration',
+      items: [
+        { level: 'main', names: ['Git', 'GitHub'] },
+        { level: 'experienced', names: ['Figma', 'Jira'] },
+      ],
+    },
+  ],
   projects: [
     {
       name: 'Rootin',
       description: '습관 형성을 도와주는 루틴 트래킹 웹앱',
-      tech: ['React', 'TypeScript', 'Zustand', 'React Query', 'Vite', 'Express', 'Prisma', 'PostgreSQL'],
+      tech: [
+        'React',
+        'TypeScript',
+        'Zustand',
+        'React Query',
+        'Vite',
+        'Express',
+        'Prisma',
+        'PostgreSQL',
+      ],
       role: '풀스택 솔로 개발',
       links: {
         client: 'https://github.com/mirea-shin/react-monorepo',
@@ -42,8 +73,21 @@ export const PORTFOLIO_DATA: PortfolioData = {
           'Yarn 4 모노레포로 클라이언트·서버 코드베이스를 단일 저장소에서 통합 관리',
         ],
         techStack: [
-          { category: 'Frontend', items: ['React', 'TypeScript', 'Zustand', 'React Query', 'Vite', 'Tailwind CSS'] },
-          { category: 'Backend', items: ['Express 5', 'Prisma', 'PostgreSQL', 'Node.js'] },
+          {
+            category: 'Frontend',
+            items: [
+              'React',
+              'TypeScript',
+              'Zustand',
+              'React Query',
+              'Vite',
+              'Tailwind CSS',
+            ],
+          },
+          {
+            category: 'Backend',
+            items: ['Express 5', 'Prisma', 'PostgreSQL', 'Node.js'],
+          },
           { category: 'Infra', items: ['Yarn 4 Monorepo'] },
         ],
       },
@@ -62,15 +106,30 @@ export const PORTFOLIO_DATA: PortfolioData = {
           '세션당 질문 10개 제한, 입력 200자 제한, 잔여 횟수 경고 등 사용자 보호 UX 구현',
         ],
         techStack: [
-          { category: 'Frontend', items: ['React', 'TypeScript', 'Tailwind CSS'] },
-          { category: 'Backend', items: ['Next.js (App Router)', 'OpenAI API'] },
+          {
+            category: 'Frontend',
+            items: ['React', 'TypeScript', 'Tailwind CSS'],
+          },
+          {
+            category: 'Backend',
+            items: ['Next.js (App Router)', 'OpenAI API'],
+          },
         ],
       },
     },
     {
       name: '일렉트론 키오스크 & 관리자 페이지',
       description: 'Electron 기반 키오스크 프로그램 및 관리자 웹 어드민',
-      tech: ['Electron', 'React', 'TypeScript', 'Next.js', 'Hono', 'SQLite', 'Zustand', 'React Query'],
+      tech: [
+        'Electron',
+        'React',
+        'TypeScript',
+        'Next.js',
+        'Hono',
+        'SQLite',
+        'Zustand',
+        'React Query',
+      ],
       role: '풀스택 솔로 개발',
       status: 'active',
       details: {
@@ -82,7 +141,17 @@ export const PORTFOLIO_DATA: PortfolioData = {
           'Next.js 15 기반 관리자 대시보드로 메뉴·카테고리·주문 현황 실시간 관리 기능 구현',
         ],
         techStack: [
-          { category: 'Kiosk', items: ['Electron', 'React', 'TypeScript', 'Zustand', 'React Query', 'Vite'] },
+          {
+            category: 'Kiosk',
+            items: [
+              'Electron',
+              'React',
+              'TypeScript',
+              'Zustand',
+              'React Query',
+              'Vite',
+            ],
+          },
           { category: 'Admin', items: ['Next.js 15', 'React', 'TypeScript'] },
           { category: 'Backend', items: ['Hono', 'better-sqlite3', 'SQLite'] },
           { category: 'Infra', items: ['pnpm Monorepo'] },
@@ -108,40 +177,11 @@ export const PORTFOLIO_DATA: PortfolioData = {
 
 export const SYSTEM_PROMPT = `
 당신은 신미례의 포트폴리오 AI 어시스턴트입니다.
-방문자가 미례에 대해 궁금한 것을 물어보면 아래 정보를 바탕으로 친절하고 간결하게 답해주세요.
-답변은 한국어와 영어 모두 가능합니다. 방문자가 사용하는 언어에 맞춰 답변하세요.
+방문자가 신미례에 대해 궁금한 것을 물어보면 아래 정보를 바탕으로 ${new Date()} 기준으로 친절하고 간결하게 답해주세요. 
+답변은 한국어와 영어 모두 가능합니다. 한국어로 질문했을 경우 한국어로 대답하고 영어로 질문했을 경우 영어로 대답하세요.
 답변할 때 마크다운 문법(**bold**, ## 헤더 등)을 사용하지 마세요. 일반 텍스트로만 답변하세요.
 
-포트폴리오와 관련 없는 질문에는 "포트폴리오 관련 질문에만 답변드릴 수 있어요 :) 이메일(m.shin6764@gmail.com)로 문의해 주세요.
-" 라고 답변하세요.
+포트폴리오와 관련 없는 질문에는 "포트폴리오 관련 질문에만 답변드릴 수 있어요 :)" 라고 답변하세요.
 
-[개인 소개]
-이름: 신미례 (Mirea Shin)
-직함: Frontend Developer
-위치: 경기도 부천
-자기소개: 기획자, 디자이너, 백엔드 개발자와 긴밀하게 협업하며 약 4년간 실무 경험을 쌓아온 프론트엔드 개발자입니다.
-
-[기술 스택]
-메인: React, TypeScript, Zustand, Tailwind CSS, Styled Components
-보조: Node.js, Express, Redux
-학습 중: Next.js
-
-[프로젝트]
-1. Rootin - 습관 트래킹 웹앱 (React, Express, TypeScript, Prisma / 솔로 풀스택)
-   - 클라이언트: https://github.com/mirea-shin/react-monorepo
-   - 서버: https://github.com/mirea-shin/rootin-server
-2. AI 챗봇 포트폴리오 - OpenAI 기반 인터랙티브 포트폴리오 (작업 중)
-3. 일렉트론 키오스크 & 관리자 페이지 - Electron 기반 키오스크 (작업 예정)
-
-[경력]
-그린이펙트솔루션 | 프론트엔드 개발자 (주임) | 2021.12 ~ 2025.08
-- Electron 기반 키오스크 및 관리자 웹 개발·유지보수
-- 기부 키오스크: 카드 단말기·카메라 연동, 웹뷰 크롤링, Electron CSS 제어
-- 도서관 키오스크 도서 위치 출력 시스템 구현
-- Feature Toggle 패턴 도입으로 다중 템플릿 유지보수 효율화
-
-[연락처]
-이메일: m.shin6764@gmail.com
-GitHub: https://github.com/mirea-shin
-전화: 010-4071-6764
+${JSON.stringify(PORTFOLIO_DATA)}
 `;

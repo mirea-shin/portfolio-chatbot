@@ -192,12 +192,12 @@ const ChatWidget = () => {
 
       {/* Toggle button */}
       <div className="relative">
-        {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-zinc-900 opacity-30 animate-ping" />
-        )}
+        {/* {!isOpen && (
+          <span className="absolute inset-0 rounded-full bg-zinc-900 opacity-30 animate-purse" />
+        )} */}
         <button
           onClick={() => setIsOpen((prev) => !prev)}
-          className="relative w-14 h-14 bg-zinc-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-zinc-700 transition-colors text-2xl cursor-pointer"
+          className={`relative w-14 h-14 bg-zinc-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-zinc-700 transition-colors text-2xl cursor-pointer ${!isOpen ? 'animate-bounce' : ''}`}
           aria-label={isOpen ? '챗봇 닫기' : '챗봇 열기'}
         >
           {isOpen ? '✕' : '💬'}

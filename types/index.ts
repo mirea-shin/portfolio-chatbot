@@ -44,10 +44,12 @@ export interface PortfolioData {
     phone: string;
   };
   skills: {
-    main: string[];
-    sub: string[];
-    learning: string[];
-  };
+    category: string;
+    items: {
+      level: 'main' | 'experienced';
+      names: string[];
+    }[];
+  }[];
   projects: Project[];
   experience: Experience[];
 }
