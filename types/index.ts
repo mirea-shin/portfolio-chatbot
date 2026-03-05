@@ -29,7 +29,6 @@ export interface Experience {
   company: string;
   position: string;
   period: string;
-  team: string;
   tasks: string[];
 }
 

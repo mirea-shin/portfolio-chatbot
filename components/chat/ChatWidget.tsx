@@ -13,8 +13,21 @@ const QUICK_REPLIES = [
   '연락처를 알 수 있을까요?',
 ];
 
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/#{1,6}\s+/g, '')
+    .replace(/`{1,3}([^`]*)`{1,3}/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/^>\s+/gm, '')
+    .replace(/^[-*+]\s+/gm, '• ')
+    .trim();
+}
+
 const MessageBubble = ({ message }: { message: Message }) => {
   const isUser = message.role === 'user';
+  const content = isUser ? message.content : stripMarkdown(message.content);
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
@@ -24,7 +37,7 @@ const MessageBubble = ({ message }: { message: Message }) => {
             : 'bg-zinc-100 text-zinc-800 rounded-bl-sm'
         }`}
       >
-        {message.content}
+        {content}
       </div>
     </div>
   );
@@ -83,7 +96,9 @@ const ChatWidget = () => {
               <p className="text-sm font-semibold text-zinc-900">
                 AI 어시스턴트
               </p>
-              <p className="text-xs text-zinc-400">신미례에 대해 물어보세요</p>
+              <p className="text-xs text-zinc-400">
+                포트폴리오에 대해 물어보세요
+              </p>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -99,7 +114,7 @@ const ChatWidget = () => {
             {showQuickReplies && (
               <div className="flex flex-col items-center gap-4 mt-4">
                 <p className="text-xs text-zinc-400 text-center">
-                  안녕하세요! 저에 대해 궁금한 것을 물어보세요 👋
+                  안녕하세요! 궁금한 것을 물어보세요 👋
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {QUICK_REPLIES.map((q) => (
@@ -119,8 +134,14 @@ const ChatWidget = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-zinc-100 text-zinc-400 px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm">
-                  <span className="animate-pulse">···</span>
+                <div className="bg-zinc-100 px-4 py-3.5 rounded-2xl rounded-bl-sm flex items-center gap-1.5">
+                  {[0, 0.15, 0.3].map((delay, i) => (
+                    <span
+                      key={i}
+                      className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-bounce"
+                      style={{ animationDelay: `${delay}s` }}
+                    />
+                  ))}
                 </div>
               </div>
             )}
@@ -192,9 +213,6 @@ const ChatWidget = () => {
 
       {/* Toggle button */}
       <div className="relative">
-        {/* {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-zinc-900 opacity-30 animate-purse" />
-        )} */}
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           className={`relative w-14 h-14 bg-zinc-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-zinc-700 transition-colors text-2xl cursor-pointer ${!isOpen ? 'animate-bounce' : ''}`}

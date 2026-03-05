@@ -38,7 +38,7 @@ const Navbar = () => {
           : 'border-none bg-transparent'
       } `}
     >
-      <nav className="max-w-3xl mx-auto  pl-0 h-14 flex items-center justify-between ">
+      <nav className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
         <a
           href="#hero"
           className={`text-sm font-semibold text-zinc-900 hover:text-zinc-600 transition-all duration-300 ${

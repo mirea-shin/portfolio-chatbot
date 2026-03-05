@@ -65,7 +65,7 @@ const Contact = () => {
                 →
               </span>
               <span className="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">
-                github.com/mirea-shin
+                {contact.github.replace('https://', '')}
               </span>
             </a>
             <div className="flex items-center gap-4 py-5">

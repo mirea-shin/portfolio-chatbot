@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
   if (!allowed) {
     return NextResponse.json(
-      { error: '요청이 너무 많습니다. 1시간 후에 다시 시도해주세요.' },
+      { error: '오늘 너무 많은 질문을 주셨어요 :) 더 궁금한 점은 이메일로 문의해 주세요.' },
       { status: 429 }
     );
   }
@@ -55,14 +55,15 @@ export async function POST(req: NextRequest) {
     }
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         ...messages,
       ],
     });
 
-    return NextResponse.json({ content: response.choices[0].message.content });
+    const content = response.choices[0].message.content ?? '응답을 생성할 수 없습니다. 다시 시도해주세요.';
+    return NextResponse.json({ content });
   } catch (error) {
     console.error('OpenAI API error:', error);
     return NextResponse.json(
