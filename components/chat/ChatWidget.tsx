@@ -160,7 +160,7 @@ const ChatWidget = () => {
             {isLimitReached ? (
               <div className="px-4 py-3 text-center">
                 <p className="text-xs text-zinc-400">
-                  세션당 최대 {maxMessages}개의 질문까지 가능해요.
+                  오늘 질문 {maxMessages}개를 모두 사용했어요.
                 </p>
                 <p className="text-xs text-zinc-400 mt-0.5">
                   더 궁금한 점은{' '}

@@ -9,6 +9,7 @@ export interface Project {
   description: string;
   tech: string[];
   role: string;
+  isCurrent?: boolean;
   links?: {
     client?: string;
     server?: string;
@@ -17,6 +18,7 @@ export interface Project {
   status: 'active' | 'in-progress' | 'planned';
   details?: {
     period?: string;
+    images?: string[];
     highlights: string[];
     techStack?: {
       category: string;

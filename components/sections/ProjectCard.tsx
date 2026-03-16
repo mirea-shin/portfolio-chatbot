@@ -26,8 +26,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
         onClick={() => setIsOpen(true)}
       >
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-semibold text-zinc-900">{project.name}</h3>
-          <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusColor[project.status]}`}>
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-semibold text-zinc-900">{project.name}</h3>
+            {project.isCurrent && (
+              <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-indigo-100 text-indigo-600 border border-indigo-200">
+                지금 여기
+              </span>
+            )}
+          </div>
+          <span className={`text-xs px-2 py-1 rounded-full font-medium shrink-0 ${statusColor[project.status]}`}>
             {statusLabel[project.status]}
           </span>
         </div>

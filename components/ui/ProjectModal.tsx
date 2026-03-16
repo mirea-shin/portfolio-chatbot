@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { Project } from '@/types';
 
 const statusLabel: Record<Project['status'], string> = {
@@ -21,6 +22,135 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
+const Lightbox = ({ src, onClose }: { src: string; onClose: () => void }) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4"
+      onClick={onClose}
+    >
+      <div className="relative w-full max-w-4xl max-h-[90vh] aspect-video">
+        <Image
+          src={src}
+          alt="프로젝트 스크린샷 확대"
+          fill
+          className="object-contain"
+          sizes="100vw"
+        />
+      </div>
+      <button
+        className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+        aria-label="닫기"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>,
+    document.body,
+  );
+};
+
+const ImageCarousel = ({ images }: { images: string[] }) => {
+  const [current, setCurrent] = useState(0);
+  const [failedIndexes, setFailedIndexes] = useState<Set<number>>(new Set());
+  const [loadedIndexes, setLoadedIndexes] = useState<Set<number>>(new Set());
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+
+  const validImages = images.filter((_, i) => !failedIndexes.has(i));
+
+  const handleError = (index: number) => {
+    setFailedIndexes((prev) => {
+      const next = new Set(prev);
+      next.add(index);
+      return next;
+    });
+    if (index === current) setCurrent(0);
+  };
+
+  const handleLoad = (index: number) => {
+    setLoadedIndexes((prev) => {
+      const next = new Set(prev);
+      next.add(index);
+      return next;
+    });
+  };
+
+  if (validImages.length === 0) return null;
+
+  const validCurrent = Math.min(current, validImages.length - 1);
+  const currentSrc = validImages[validCurrent];
+  const originalIndex = images.indexOf(currentSrc);
+  const isLoaded = loadedIndexes.has(originalIndex);
+
+  return (
+    <>
+      <div className="space-y-2">
+        <div
+          className="relative w-full aspect-video bg-zinc-100 rounded-xl overflow-hidden cursor-zoom-in group"
+          onClick={() => isLoaded && setLightboxSrc(currentSrc)}
+        >
+          {/* Skeleton */}
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-zinc-200 animate-pulse rounded-xl" />
+          )}
+          <Image
+            src={currentSrc}
+            alt={`프로젝트 스크린샷 ${validCurrent + 1}`}
+            fill
+            className={`object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            sizes="(max-width: 512px) 100vw, 512px"
+            onLoad={() => handleLoad(originalIndex)}
+            onError={() => handleError(originalIndex)}
+          />
+          {/* 확대 힌트 */}
+          {isLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+              <span className="text-white text-xs bg-black/50 px-2 py-1 rounded-md">클릭하여 확대</span>
+            </div>
+          )}
+          {validImages.length > 1 && (
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); setCurrent((p) => (p - 1 + validImages.length) % validImages.length); }}
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors"
+                aria-label="이전 이미지"
+              >
+                ‹
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setCurrent((p) => (p + 1) % validImages.length); }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full transition-colors"
+                aria-label="다음 이미지"
+              >
+                ›
+              </button>
+            </>
+          )}
+        </div>
+        {validImages.length > 1 && (
+          <div className="flex justify-center gap-1.5">
+            {validImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-1.5 h-1.5 rounded-full transition-colors ${i === validCurrent ? 'bg-zinc-700' : 'bg-zinc-300'}`}
+                aria-label={`${i + 1}번 이미지로 이동`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      {lightboxSrc && <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />}
+    </>
+  );
+};
+
 const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,6 +163,8 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
       document.documentElement.style.overflow = '';
     };
   }, [onClose]);
+
+  const images = project.details?.images;
 
   return createPortal(
     <div
@@ -69,6 +201,11 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 
         {/* Body */}
         <div className="px-6 py-5 space-y-6">
+          {/* Images */}
+          {images && images.length > 0 && (
+            <ImageCarousel images={images} />
+          )}
+
           {/* Description */}
           <p className="text-zinc-600 leading-relaxed">{project.description}</p>
 
@@ -146,14 +283,20 @@ const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
                 </a>
               )}
               {project.links.demo && (
-                <a
-                  href={project.links.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-zinc-900 text-white hover:bg-zinc-700 transition-colors"
-                >
-                  Demo →
-                </a>
+                project.isCurrent ? (
+                  <span className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-indigo-600 text-white cursor-default select-none">
+                    지금 보고 계신 사이트
+                  </span>
+                ) : (
+                  <a
+                    href={project.links.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-zinc-900 text-white hover:bg-zinc-700 transition-colors"
+                  >
+                    Demo →
+                  </a>
+                )
               )}
             </div>
           )}
