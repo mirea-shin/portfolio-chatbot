@@ -47,6 +47,52 @@ export const PORTFOLIO_DATA: PortfolioData = {
   ],
   projects: [
     {
+      name: '일렉트론 키오스크 & 관리자 페이지',
+      description: 'Electron 기반 키오스크 프로그램 및 관리자 웹 어드민',
+      tech: [
+        'Electron',
+        'React',
+        'TypeScript',
+        'Next.js',
+        'Hono',
+        'SQLite',
+        'Zustand',
+        'React Query',
+      ],
+      role: '풀스택 솔로 개발',
+      links: {
+        client: 'https://github.com/mirea-shin/kiosk',
+        server: 'https://github.com/mirea-shin/kiosk',
+        demo: 'https://kiosk-admin-three.vercel.app/',
+      },
+      status: 'active',
+      details: {
+        highlights: [
+          'pnpm 모노레포로 키오스크(Electron)·어드민(Next.js)·서버(Hono)·공유 타입 패키지를 단일 저장소에서 통합 관리',
+          'Electron contextIsolation + preload 브릿지 패턴으로 렌더러-메인 프로세스 간 보안 IPC 채널 설계',
+          '1080×1920px 세로형 키오스크 전용 UI 레이아웃 구현',
+          'Hono + better-sqlite3 기반 경량 REST API 서버 구축으로 외부 DB 없이 로컬 운용 가능한 구조 설계',
+          'Next.js 15 기반 관리자 대시보드로 메뉴·카테고리·주문 현황 실시간 관리 기능 구현',
+        ],
+        techStack: [
+          {
+            category: 'Kiosk',
+            items: [
+              'Electron',
+              'React',
+              'TypeScript',
+              'Zustand',
+              'React Query',
+              'Vite',
+            ],
+          },
+          { category: 'Admin', items: ['Next.js 15', 'React', 'TypeScript'] },
+          { category: 'Backend', items: ['Hono', 'better-sqlite3', 'SQLite'] },
+          { category: 'Infra', items: ['pnpm Monorepo'] },
+        ],
+      },
+    },
+    {
       name: 'Rootin',
       description: '습관 형성을 도와주는 루틴 트래킹 웹앱',
       tech: [
@@ -61,7 +107,8 @@ export const PORTFOLIO_DATA: PortfolioData = {
       ],
       role: '풀스택 솔로 개발',
       links: {
-        client: 'https://github.com/mirea-shin/react-monorepo',
+        client:
+          'https://github.com/mirea-shin/react-monorepo/tree/main/projects/rootin',
         server: 'https://github.com/mirea-shin/rootin-server',
         demo: 'https://react-monorepo-rootin.vercel.app',
       },
@@ -127,47 +174,6 @@ export const PORTFOLIO_DATA: PortfolioData = {
             category: 'Backend',
             items: ['Next.js (App Router)', 'OpenAI API'],
           },
-        ],
-      },
-    },
-    {
-      name: '일렉트론 키오스크 & 관리자 페이지',
-      description: 'Electron 기반 키오스크 프로그램 및 관리자 웹 어드민',
-      tech: [
-        'Electron',
-        'React',
-        'TypeScript',
-        'Next.js',
-        'Hono',
-        'SQLite',
-        'Zustand',
-        'React Query',
-      ],
-      role: '풀스택 솔로 개발',
-      status: 'in-progress',
-      details: {
-        highlights: [
-          'pnpm 모노레포로 키오스크(Electron)·어드민(Next.js)·서버(Hono)·공유 타입 패키지를 단일 저장소에서 통합 관리',
-          'Electron contextIsolation + preload 브릿지 패턴으로 렌더러-메인 프로세스 간 보안 IPC 채널 설계',
-          '1080×1920px 세로형 키오스크 전용 UI 레이아웃 구현',
-          'Hono + better-sqlite3 기반 경량 REST API 서버 구축으로 외부 DB 없이 로컬 운용 가능한 구조 설계',
-          'Next.js 15 기반 관리자 대시보드로 메뉴·카테고리·주문 현황 실시간 관리 기능 구현',
-        ],
-        techStack: [
-          {
-            category: 'Kiosk',
-            items: [
-              'Electron',
-              'React',
-              'TypeScript',
-              'Zustand',
-              'React Query',
-              'Vite',
-            ],
-          },
-          { category: 'Admin', items: ['Next.js 15', 'React', 'TypeScript'] },
-          { category: 'Backend', items: ['Hono', 'better-sqlite3', 'SQLite'] },
-          { category: 'Infra', items: ['pnpm Monorepo'] },
         ],
       },
     },
